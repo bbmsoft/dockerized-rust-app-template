@@ -11,6 +11,6 @@ COPY . .
 RUN cargo install --target x86_64-unknown-linux-musl --path .
 
 FROM scratch
-COPY --from=build-{{project-name}}/usr/local/cargo/bin/{{project-name}} .
+COPY --from=build-{{project-name}} /usr/local/cargo/bin/{{project-name}} .
 USER 1000
 CMD ["./{{project-name}}"]
