@@ -9,6 +9,16 @@ args = [
     ".",
 ]
 
+[tasks.docker-run]
+command = "docker"
+args = [
+    "run",
+    "-it",
+    "--rm",
+    "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}",
+]
+dependencies = ["docker-build"]
+
 [tasks.docker-push-versioned]
 command = "docker"
 args = ["push", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}"]
