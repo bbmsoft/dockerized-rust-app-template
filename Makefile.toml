@@ -1,8 +1,21 @@
 [tasks.docker-build]
 command = "docker"
-args = ["build", "-t", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}", "."]
+args = [
+    "build",
+    "-t",
+    "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}",
+    "-t",
+    "{{repository}}/{{project-name}}:latest",
+    ".",
+]
 
-[tasks.docker-push]
+[tasks.docker-push-versioned]
 command = "docker"
 args = ["push", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}"]
-dependencies = ["docker-build"]
+
+[tasks.docker-push-latest]
+command = "docker"
+args = ["push", "{{repository}}/{{project-name}}:latest"]
+
+[tasks.publish]
+dependencies = ["docker-build", "docker-push-versioned", "docker-push-latest"]
