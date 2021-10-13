@@ -16,14 +16,18 @@ RUN USER=root cargo new {{project-name}}
 WORKDIR /usr/src/{{project-name}}
 COPY Cargo.toml Cargo.lock ./
 RUN cargo build --release --target x86_64-unknown-linux-musl
+# make sure the executable gets rebuilt after copying the sources
+RUN rm target/x86_64-unknown-linux-musl/release/{{project-name}}*
 
 # Copy the source and build the application.
-COPY src ./src
-# TODO copy whatever other resources you need for the build
-RUN cargo install --target x86_64-unknown-linux-musl --path .
+COPY . .
+RUN cargo build --release --target x86_64-unknown-linux-musl
+# remove unneeded symbols from executable
+RUN strip target/x86_64-unknown-linux-musl/release/{{project-name}}
 
 # Copy the statically-linked binary into a scratch container.
 FROM scratch
-COPY --from=build-{{project-name}} /usr/local/cargo/bin/{{project-name}} .
+COPY --from=build-{{project-name}} target/x86_64-unknown-linux-musl/release/{{project-name}} .
 USER 1000
+ENV RUST_LOG info
 CMD ["./{{project-name}}"]
