@@ -4,6 +4,12 @@ version = "0.1.0"
 edition = "2018"
 authors = ["{{authors}}"]
 
+[profile.release]
+lto = true
+codegen-units = 1
+# uncomment to reduce binary size at the expense of worse stack traces in case of panic
+#panic = "abort"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
