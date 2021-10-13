@@ -15,7 +15,7 @@ RUN rustup target add x86_64-unknown-linux-musl
 RUN USER=root cargo new {{project-name}}
 WORKDIR /usr/src/{{project-name}}
 COPY Cargo.toml Cargo.lock ./
-RUN cargo build --release
+RUN cargo build --release --target x86_64-unknown-linux-musl
 
 # Copy the source and build the application.
 COPY src ./src
