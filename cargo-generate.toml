@@ -1,0 +1,3 @@
+[placeholders.repository]
+type = "string"
+prompt = "Which docker repository do you wish to deploy to?"

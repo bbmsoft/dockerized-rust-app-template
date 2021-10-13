@@ -1,0 +1,8 @@
+[tasks.docker-build]
+command = "docker"
+args = ["build", "-t", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}", "."]
+
+[tasks.docker-push]
+command = "docker"
+args = ["push", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}"]
+dependencies = ["docker-build"]
