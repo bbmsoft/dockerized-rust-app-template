@@ -17,5 +17,5 @@ args = ["push", "{{repository}}/{{project-name}}:${CARGO_MAKE_CRATE_VERSION}"]
 command = "docker"
 args = ["push", "{{repository}}/{{project-name}}:latest"]
 
-[tasks.publish]
+[tasks.docker-publish]
 dependencies = ["docker-build", "docker-push-versioned", "docker-push-latest"]
